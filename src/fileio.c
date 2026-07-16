@@ -22,14 +22,14 @@ char *formatFileName(const char *raw_filename)
     int raw_len = strlen(raw_filename);
     int prefix_len = strlen(file_address_prefix);
 
-    if (raw_len + prefix_len + 1 > MAX_FILENAME_SIZE) return NULL; // Return NULL to signify an error has occured.
+    if (raw_len + prefix_len + 1 > MAX_FILENAME_LEN) return NULL; // Return NULL to signify an error has occured.
 
     // Allocate memory for the formatted filename.
-    char *formatted_filename = malloc(MAX_FILENAME_SIZE);
+    char *formatted_filename = malloc(MAX_FILENAME_LEN);
     if (!formatted_filename) return NULL;
 
     // Format the filename.
-    snprintf(formatted_filename, MAX_FILENAME_SIZE, "%s%s",file_address_prefix, raw_filename);
+    snprintf(formatted_filename, MAX_FILENAME_LEN, "%s%s",file_address_prefix, raw_filename);
 
     return formatted_filename;
 }
@@ -89,8 +89,8 @@ int checkHeaderExists(const char *filename)
     int header_len = strlen(header);
 
     // Reads the first line into the buffer.
-    char buffer[MAX_BUFFER_SIZE];
-    fgets(buffer, MAX_BUFFER_SIZE, fh);
+    char buffer[MAX_BUFFER_LEN];
+    fgets(buffer, MAX_BUFFER_LEN, fh);
 
     fclose(fh);
 
@@ -122,13 +122,13 @@ int getRecordCount (const char *filename)
     FILE *fh = fopen(filename, "r");
     if (!fh) return FILE_IO_FAIL;
 
-    char buffer[MAX_BUFFER_SIZE];
+    char buffer[MAX_BUFFER_LEN];
     int record_count;
 
     // Read and discard the header.
-    fgets(buffer, MAX_BUFFER_SIZE, fh); // TO DO: Check header exists.
+    fgets(buffer, MAX_BUFFER_LEN, fh); // TO DO: Check header exists.
 
-    while (fgets(buffer, MAX_BUFFER_SIZE, fh)) record_count++;
+    while (fgets(buffer, MAX_BUFFER_LEN, fh)) record_count++;
 
     // Close file & return the record count.
     fclose(fh);
