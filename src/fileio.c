@@ -4,6 +4,40 @@
 
 /**
  * [fileio.c]
+ * Function: *formatFilename
+ * Purpose: Formats a user provied filename by adding the file's address prefix and the name to a string.
+ * Parameters:
+ *   - filename (char): The raw name of the file without the prefix.
+ * Example: char *filename = formatFileName("data.csv");
+ * Effects: Allocates memory on the heap.
+ * Return: NULL if an error occured. The formatted string if successful.
+*/
+char *formatFileName(const char *raw_filename)
+{
+    if (!raw_filename) return NULL;
+
+    const char *file_address_prefix = "../data/";
+
+    // Check the full formatted filename length is within the max length.
+    int raw_len = strlen(raw_filename);
+    int prefix_len = strlen(file_address_prefix);
+
+    if (raw_len + prefix_len + 1 > MAX_FILENAME_SIZE) return NULL; // Return NULL to signify an error has occured.
+
+    // Allocate memory for the formatted filename.
+    char *formatted_filename = malloc(MAX_FILENAME_SIZE);
+    if (!formatted_filename) return NULL;
+
+    // Format the filename.
+    snprintf(formatted_filename, MAX_FILENAME_SIZE, "%s%s",file_address_prefix, raw_filename);
+
+    return formatted_filename;
+}
+
+
+
+/**
+ * [fileio.c]
  * Function: isFileEmpty
  * Purpose: Checks to see if a file is empty by taking the position in bytes at the end of the file.
  * Parameters:
