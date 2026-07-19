@@ -9,6 +9,7 @@ typedef struct Node {
 } Node;
 
 Node *createNode(int record_num, char *title, char *author, char *genre, int page_count, double price, int rating);
+int insertNode(Node **head, int record_num, char *title, char *author, char *genre, int page_count, double price, int rating);
 // TO DO: Add insert, delete & free functions. Maybe a list length to count the nodes?
 
 #endif

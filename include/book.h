@@ -7,7 +7,7 @@
 #define MAX_AUTHOR_LEN 30
 #define MAX_GENRE_LEN 20
 
-typedef struct {
+typedef struct Book {
     int record_num;
     char title[MAX_TITLE_LEN];
     char author[MAX_AUTHOR_LEN];

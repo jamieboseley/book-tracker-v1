@@ -24,6 +24,14 @@ Node *createNode(int record_num, char *title, char *author, char *genre, int pag
     Node *newNode = malloc(sizeof(Node));
     if (!newNode) return NULL;
 
+    // Allocate memory for the data.
+    newNode->data = malloc(sizeof(Book));
+    if (!newNode->data)
+    {
+        free(newNode);
+        return NULL;
+    }
+
     // Set the pointers and data.
     newNode->next = NULL;
 
@@ -37,4 +45,46 @@ Node *createNode(int record_num, char *title, char *author, char *genre, int pag
     strncpy(newNode->data->genre, genre, MAX_GENRE_LEN);
 
     return newNode;
+}
+
+
+
+/**
+ * [linked_list.c]
+ * Function: insertNode
+ * Purpose: Inserts a dynamically allocated node to a linked list.
+ * Parameters:
+ *   - head (Node): A double pointer to the head node.
+ *   - record_num (int): The record number.
+ *   - title (char): The book title.
+ *   - author (char): The book author.
+ *   - genre (char): The book genre.
+ *   - page_count (int): The book page count.
+ *   - price (double): The book price.
+ *   - rating (int): The book rating.
+ * Example: if (!insertNode(&head, 1, "harry potter", "jk rowling", "fantasy", 494, 19.99, 5)) break;
+ * Effects: Allocates memory on the heap.
+ * Return: FAIL if an error occured. SUCCESS if successful.
+*/
+int insertNode(Node **head, int record_num, char *title, char *author, char *genre, int page_count, double price, int rating)
+{
+    // Create the new node.
+    Node *newNode = createNode(record_num, title, author, genre, page_count, price, rating);
+    if (!newNode) return FAIL;
+
+    // If the linked list is empty, set the head to the new node.
+    if (!*head)
+    {
+        *head = newNode;
+        return SUCCESS;
+    }
+
+    // If the linked list is not empty, set the last node the new node.
+    Node *currentNode = *head;
+    while (currentNode->next)
+    {
+        currentNode = currentNode->next;
+    }
+    currentNode->next = newNode;
+    return SUCCESS;
 }
