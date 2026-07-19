@@ -88,3 +88,33 @@ int insertNode(Node **head, int record_num, char *title, char *author, char *gen
     currentNode->next = newNode;
     return SUCCESS;
 }
+
+
+
+/**
+ * [linked_list.c]
+ * Function: countNodes
+ * Purpose: Counts the total number of nodes in a linked list.
+ * Parameters:
+ *   - head (Node): A pointet to the head node.
+ * Example: int count = countNodes(head);
+ * Effects: None.
+ * Return: The total number of nodes in a linked list.
+*/
+int countNodes(Node *head)
+{
+    // If the linked list is empty, return 0.
+    if (!head) return 0;
+
+    // Traverse the linked list and count the nodes.
+    int count = 0;
+    Node *currentNode = head;
+
+    while (currentNode)
+    {
+        count++;
+        currentNode = currentNode->next;
+    }
+
+    return count;
+}
