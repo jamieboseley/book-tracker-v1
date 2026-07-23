@@ -96,7 +96,7 @@ int insertNode(Node **head, int record_num, char *title, char *author, char *gen
  * Function: countNodes
  * Purpose: Counts the total number of nodes in a linked list.
  * Parameters:
- *   - head (Node): A pointet to the head node.
+ *   - head (Node): A pointer to the head node.
  * Example: int count = countNodes(head);
  * Effects: None.
  * Return: The total number of nodes in a linked list.
@@ -118,3 +118,33 @@ int countNodes(Node *head)
 
     return count;
 }
+
+
+
+/**
+ * [linked_list.c]
+ * Function: freeList
+ * Purpose: Frees all the nodes and data in a linked list.
+ * Parameters:
+ *   - head (Node): A double pointer to the head node.
+ * Example: freeList(&head);
+ * Effects: Frees memory on the heap.
+ * Return: None.
+*/
+void freeList(Node **head)
+{
+    // Set the current node.
+    Node *currentNode = *head;
+    Node *nextNode;
+
+    // Iterate through the list to free nodes & data.
+    while (!currentNode)
+    {
+        nextNode = currentNode->next;
+        free(currentNode->data);
+        free(currentNode);
+        currentNode = nextNode;
+    }
+
+    *head = NULL;
+} // TO DO: Should this have a return value to signify success?
