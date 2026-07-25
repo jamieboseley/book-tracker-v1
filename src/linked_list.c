@@ -148,3 +148,46 @@ void freeList(Node **head)
 
     *head = NULL;
 } // TO DO: Should this have a return value to signify success?
+
+
+
+/**
+ * [linked_list.c]
+ * Function: exportToCSV
+ * Purpose: Prints all contents of a linked list to a formatted CSV file.
+ * Parameters:
+ *   - head (Node): A pointer to the head node.
+ *   - filename (char): The name for the file.
+ * Example: if (exportToCSV(head, "data.csv")) printf("Success\n");
+ * Effects: Opens and writes to a file under filename.
+ * Return: SUCCESS if the data was written. FAIL or FILE_IO_FAIL if the data was not written.
+*/
+int exportToCSV(Node *head, const char *filename)
+{
+    // Check to see if the list is empty. Check to see if a file with the same name already exists.
+    if (!head || checkFileExists(filename)) return FAIL;
+
+    // Attempt to open the file.
+    FILE *fh = fopen(filename, "w");
+    if (!fh) return FILE_IO_FAIL;
+
+    // Print the header.
+    fprintf(fh, "ID,Title,Author,Genre,PageCount,Price,Rating\n");
+
+    // Set the current node.
+    Node *currentNode = head;
+    
+
+    // Iterate through the linked list and print the contents.
+    while (currentNode)
+    {
+        fprintf(fh, "%d,%s,%s,%s,%d,%.2lf,%d", currentNode->data->record_num, currentNode->data->title, currentNode->data->author, currentNode->data->genre, currentNode->data->page_count, currentNode->data->price, currentNode->data->rating);
+
+        if (currentNode->next) fprintf(fh, "\n");
+
+        currentNode = currentNode->next;
+    }
+
+    fclose(fh);
+    return SUCCESS;
+}

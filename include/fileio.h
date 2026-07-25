@@ -14,5 +14,6 @@ char *formatFileName(const char *raw_filename);
 int isFileEmpty(const char *filename);
 int checkHeaderExists(const char *filename);
 int getRecordCount (const char *filename);
+int checkFileExists(const char *filename);
 
 #endif

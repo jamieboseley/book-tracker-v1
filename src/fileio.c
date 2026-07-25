@@ -134,3 +134,30 @@ int getRecordCount (const char *filename)
     fclose(fh);
     return record_count;
 }
+
+
+
+/**
+ * [fileio.c]
+ * Function: checkFileExists
+ * Purpose: Checks to see if a file with a specified name exists.
+ * Parameters:
+ *   - filename (char): The name of the file being tested.
+ * Example: if (!checkFileExists("data.csv")) return;
+ * Effects: Opens the file under filename in read only mode.
+ * Return: SUCCESS if the file exists. FAIL if the file does not exist.
+*/
+int checkFileExists(const char *filename)
+{
+    // Attempt to open the file.
+    FILE *fh = fopen(filename, "r");
+
+    // If the file can be opened, it exists.
+    if (fh)
+    {
+        fclose(fh);
+        return SUCCESS;
+    }
+
+    return FAIL;
+}
