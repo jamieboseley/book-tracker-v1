@@ -44,13 +44,13 @@ char *formatFileName(const char *raw_filename)
  *   - filename (char): The name of the file being opened.
  * Example: if (isFileEmpty("data.csv")) printf("Empty\n");
  * Effects: Opens & reads the file under filename.
- * Return: SUCCESS if file is empty. FAIL if file is not empty. FILE_IO_FAIL if the file could not be opened.
+ * Return: SUCCESS if file is empty. FAIL if file is not empty or could not be opened.
 */
 int isFileEmpty(const char *filename)
 {
     // Attempt to open the file.
     FILE *fh = fopen(filename, "r");
-    if (!fh) return FILE_IO_FAIL;
+    if (!fh) return FAIL;
 
     // Move pointer to the end of the file and get it's position.
     fseek(fh, 0, SEEK_END);
@@ -74,13 +74,13 @@ int isFileEmpty(const char *filename)
  *   - filename (char): The name of the file being opened.
  * Example: if (!checkHeaderExists("data.csv")) return;
  * Effects: Opens & reads the file under filename.
- * Return: SUCCESS if the header exists. FAIL if header does not exist. FILE_IO_FAIL if the file could not be opened.
+ * Return: SUCCESS if the header exists. FAIL if header does not exist or could not be opened.
 */
 int checkHeaderExists(const char *filename)
 {
     // Attempt to open the file.
     FILE *fh = fopen(filename, "r");
-    if (!fh) return FILE_IO_FAIL;
+    if (!fh) return FAIL;
 
     // Check if file is empty.
     if (isFileEmpty(filename)) return FAIL;

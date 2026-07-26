@@ -153,6 +153,81 @@ void freeList(Node **head)
 
 /**
  * [linked_list.c]
+ * Function: importFromCSV
+ * Purpose: Reads a formatted CSV file and creates a linked list using the data.
+ * Parameters:
+ *   - filename (char): The name of the file.
+ *   - record_count (int): A pointer to the record count.
+ * Example: Node *head = importFromCSV("data.csv", &record_count);
+ * Effects: Opens a file in read only mode & allocates memory on the heap.
+ * Return: A pointer to the head node. NULL if an error occured.
+*/
+Node *importFromCSV(const char *filename, int *record_count)
+{
+    // Attempt to open the file.
+    FILE *fh = fopen(filename, "r");
+    if (!fh) return NULL;
+
+    // Get record count.
+    *record_count = getRecordCount(filename);
+    if (*record_count <= 0)
+    {
+         fclose(fh);
+         return NULL;
+    }
+
+    // Check header exists and skip it.
+    char buffer[MAX_BUFFER_LEN];
+    if (!fgets(buffer, MAX_BUFFER_LEN, fh))
+    {
+        fclose(fh);
+        return NULL;
+    }
+    
+    // Read the data into a linked list using tokens.
+    Node *head = NULL;
+    while (fgets(buffer, MAX_BUFFER_LEN, fh))
+    {
+        buffer[strcspn(buffer, "\n")] = '\0';
+
+        char *token = strtok(buffer, ",");
+        if (!token) continue;
+        int record_num = atoi(token);
+
+        char *title = strtok(NULL, ",");
+        if (!title) title = "";
+
+        char *author = strtok(NULL, ",");
+        if (!author) author = "";
+
+        char *genre = strtok(NULL, ",");
+        if (!genre) genre = "";
+
+        token = strtok(NULL, ",");
+        int page_count = token ? atoi(token) : 0;
+
+        token = strtok(NULL, ",");
+        double price = token ? atof(token) : 0.0;
+
+        token = strtok(NULL, ",");
+        int rating = token ? atoi(token) : 0;
+
+        if (!insertNode(&head, record_num, title, author, genre, page_count, price, rating))
+        {
+            // TO DO: Add fail code. Free data?
+            fclose(fh);
+            return NULL;
+        }
+    }
+
+    fclose(fh);
+    return head;
+}
+
+
+
+/**
+ * [linked_list.c]
  * Function: exportToCSV
  * Purpose: Prints all contents of a linked list to a formatted CSV file.
  * Parameters:
