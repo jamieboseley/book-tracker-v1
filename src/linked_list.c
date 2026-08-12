@@ -266,3 +266,92 @@ int exportToCSV(Node *head, const char *filename)
     fclose(fh);
     return SUCCESS;
 }
+
+
+
+/**
+ * [linked_list.c]
+ * Function: displayList
+ * Purpose: Prints all contents of a linked list to the console in an aligned format.
+ * Parameters:
+ *   - head (Node): A pointer to the head node.
+ * Example: displayList(head);
+ * Effects: None.
+ * Return: None.
+*/
+void displayList(Node *head)
+{
+    // Check to see if the list is empty.
+    if (!head)
+    {
+        printf("No records to display.");
+        return;
+    }
+
+    // Define the headers.
+    const char *h1 = "ID";
+    const char *h2 = "Title";
+    const char *h3 = "Author";
+    const char *h4 = "Genre";
+    const char *h5 = "PageCount";
+    const char *h6 = "Price";
+    const char *h7 = "Rating";
+
+    // Initialize the max length for each column and the universial spacing gap.;
+    int max_col1_len = strlen(h1);
+    int max_col2_len = strlen(h2);
+    int max_col3_len = strlen(h3);
+    int max_col4_len = strlen(h4);
+    int max_col5_len = strlen(h5);
+    int max_col6_len = strlen(h6);
+    int max_col7_len = strlen(h7);
+    int column_width = 5;
+
+    Node *currentNode = head;
+
+    // Iterate through each record and record the longest length of each column.
+    while (currentNode)
+    {
+        int record_num_len = snprintf(NULL, 0, "%d", currentNode->data->record_num);
+        max_col1_len = ((record_num_len > max_col1_len) ? record_num_len : max_col1_len);
+
+        int title_len = strlen(currentNode->data->title);
+        max_col2_len = ((title_len > max_col2_len) ? title_len : max_col2_len);
+
+        int author_len = strlen(currentNode->data->author);
+        max_col3_len = ((author_len > max_col3_len) ? author_len : max_col3_len);
+
+        int genre_len = strlen(currentNode->data->genre);
+        max_col4_len = ((genre_len > max_col4_len) ? genre_len : max_col4_len);
+
+        int page_count_len = snprintf(NULL, 0, "%d", currentNode->data->page_count);
+        max_col5_len = ((page_count_len > max_col5_len) ? page_count_len : max_col5_len);
+
+        int price_len = snprintf(NULL, 0, "%lf", currentNode->data->price);
+        max_col6_len = ((price_len > max_col6_len) ? price_len : max_col6_len);
+
+        currentNode = currentNode->next;
+    }
+
+    // Add the column width.
+    max_col1_len += column_width;
+    max_col2_len += column_width;
+    max_col3_len += column_width;
+    max_col4_len += column_width;
+    max_col5_len += column_width;
+    max_col6_len += column_width;
+    max_col7_len += column_width;
+
+    // Print the header with the spacing.
+    printf("%-*s%-*s%-*s%-*s%*s%*s%*s\n", max_col1_len, h1, max_col2_len, h2, max_col3_len, h3, max_col4_len, h4, max_col5_len, h5, max_col6_len, h6, max_col7_len, h7);
+    
+    // Print the data with the spacing.
+    currentNode = head;
+    while (currentNode)
+    {
+        char price_str[32];
+        snprintf(price_str, sizof(price_str), "$%.2lf", currentNode->data->price);
+        printf("%-*d%-*s%-*s%-*s%*d%*s%*d\n", max_col1_len, currentNode->data->record_num, max_col2_len, currentNode->data->title, max_col3_len, currentNode->data->author, max_col4_len, currentNode->data->genre, max_col5_len, currentNode->data->page_count, max_col6_len, price_str, max_col7_len, currentNode->data->rating);
+        currentNode = currentNode->next;
+    }
+}

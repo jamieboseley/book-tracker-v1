@@ -14,5 +14,8 @@ int countNodes(Node *head);
 void freeList(Node **head); // TO DO: Refactor code to split free list and free node into separate functions? Could be useful for deleting single entries.
 Node *importFromCSV(const char *filename, int *record_count);
 int exportToCSV(Node *head, const char *filename);
+void displayList(Node *head);
 
 #endif
+
+// TO DO: Verify the same vairable naming format is being followed.
