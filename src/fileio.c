@@ -1,7 +1,5 @@
 #include "../include/fileio.h"
 
-
-
 /**
  * [fileio.c]
  * Function: *formatFilename
@@ -86,7 +84,7 @@ int checkHeaderExists(const char *filename)
     if (isFileEmpty(filename)) return FAIL;
 
     char *header = "Title,Author,Genre,PageCount,Price,Rating";
-    int header_len = strlen(header);
+    size_t header_len = strlen(header);
 
     // Reads the first line into the buffer.
     char buffer[MAX_BUFFER_LEN];

@@ -350,7 +350,7 @@ void displayList(Node *head)
     while (currentNode)
     {
         char price_str[32];
-        snprintf(price_str, sizof(price_str), "$%.2lf", currentNode->data->price);
+        snprintf(price_str, sizeof(price_str), "$%.2lf", currentNode->data->price);
         printf("%-*d%-*s%-*s%-*s%*d%*s%*d\n", max_col1_len, currentNode->data->record_num, max_col2_len, currentNode->data->title, max_col3_len, currentNode->data->author, max_col4_len, currentNode->data->genre, max_col5_len, currentNode->data->page_count, max_col6_len, price_str, max_col7_len, currentNode->data->rating);
         currentNode = currentNode->next;
     }

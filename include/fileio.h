@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define MAX_BUFFER_LEN 250
 #define MAX_FILENAME_LEN 250
