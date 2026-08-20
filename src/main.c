@@ -2,13 +2,13 @@
 
 int main (void)
 {
-    // Initialize variables.
+    // Initialize choice variable.
     int choice;
-    char buffer[MAX_BUFFER_LEN];
 
     // Loop main menu.
     do
     {
+        char buffer[MAX_BUFFER_LEN];
         printf("\n===============Book Tracker V1===============\n");
         printf("1. Create New Records\n");
         printf("2. Edit Records\n");
@@ -23,18 +23,23 @@ int main (void)
 
         switch (choice)
         {
+            // Create new records case.
             case 1:
                 break;
 
+            // Edit records case.
             case 2:
                 break;
 
+            // Display records case.
             case 3:
                 break;
 
+            // Delete records case.
             case 4:
                 break;
 
+            // Exit case.
             case 5:
                 printf("Exiting...\n");
                 break;
@@ -46,11 +51,3 @@ int main (void)
 
     return 0;
 }
-
-/*
-import
-export
-Display
-new list
-
-*/
