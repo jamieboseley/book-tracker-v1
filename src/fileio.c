@@ -14,7 +14,7 @@ char *formatFileName(const char *raw_filename)
 {
     if (!raw_filename) return NULL;
 
-    const char *file_address_prefix = "../data/";
+    const char *file_address_prefix = "data/";
 
     // Check the full formatted filename length is within the max length.
     int raw_len = strlen(raw_filename);
@@ -121,7 +121,7 @@ int getRecordCount (const char *filename)
     if (!fh) return FILE_IO_FAIL;
 
     char buffer[MAX_BUFFER_LEN];
-    int record_count;
+    int record_count = 0;
 
     // Read and discard the header.
     fgets(buffer, MAX_BUFFER_LEN, fh); // TO DO: Check header exists.

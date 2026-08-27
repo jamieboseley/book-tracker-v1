@@ -2,8 +2,11 @@
 
 int main (void)
 {
-    // Initialize choice variable.
+    // Initialize variables.
     int choice;
+    int record_count = 0;
+    Node *head = NULL;
+    char *filename = NULL;
 
     // Loop main menu.
     do
@@ -19,7 +22,11 @@ int main (void)
         
         printf("Enter choice (1-5): ");
         fgets(buffer, sizeof(buffer), stdin);
-        sscanf(buffer, "%d", &choice);
+        if (sscanf(buffer, "%d", &choice) != 1)
+        {
+            printf("Invalid choice. Please try again.\n");
+            continue;
+        }
 
         switch (choice)
         {
@@ -33,6 +40,29 @@ int main (void)
 
             // Display records case.
             case 3:
+                // Get filename from user.
+                filename = getFilename();
+                if (!filename) break;
+
+                // Import the list from a file.
+                head = importFromCSV(filename, &record_count);
+                if (!head)
+                {  
+                    printf("Error: There was a problem importing data.\n");
+                    free(filename);
+                    filename = NULL;
+                    record_count = 0;
+                    break;
+                }
+
+                // Display records.
+                displayList(head);
+
+                freeList(&head);
+                free(filename);
+                record_count = 0;
+                filename = NULL;
+
                 break;
 
             // Delete records case.

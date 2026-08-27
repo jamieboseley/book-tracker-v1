@@ -19,15 +19,22 @@ char *getFilename()
 
     printf("Enter the filename: ");
 
-    // No filename was entered.
+    // Failure reading filename.
     if (!fgets(raw_filename, sizeof(raw_filename), stdin))
     {
-        printf("Error: No filename was entered.\n");
+        printf("Error: Failed to read filename.\n");
         return NULL;
     }
 
     // Remove newline from raw filename.
     raw_filename[strcspn(raw_filename, "\n")] = '\0';
+
+    // No filename was entered.
+    if (raw_filename[0] == '\0')
+    {
+        printf("Error: No filename was entered.\n");
+        return NULL;
+    }
 
     // Format filename.
     filename = formatFileName(raw_filename);

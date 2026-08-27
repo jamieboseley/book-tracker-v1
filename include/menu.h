@@ -3,6 +3,6 @@
 
 #include "fileio.h"
 
-char *enterRawFilename();
+char *getFilename();
 
 #endif
