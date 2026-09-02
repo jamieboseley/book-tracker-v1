@@ -67,6 +67,24 @@ int main (void)
 
             // Delete records case.
             case 4:
+                // Get filename from user.
+                filename = getFilename();
+                if (!filename) break;
+
+                // Attempt to delete the file.
+                if (remove(filename) == 0)
+                {
+                    printf("%s was successfully deleted!\n", filename);
+                }
+                else
+                {
+                    printf("There was an error deleting the file.\n");
+                }
+
+                // Free filename.
+                free(filename);
+                filename = NULL;
+
                 break;
 
             // Exit case.
