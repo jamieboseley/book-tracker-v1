@@ -12,15 +12,15 @@ int main (void)
     do
     {
         char buffer[MAX_BUFFER_LEN];
+        int user_rec_count = 0;
         printf("\n===============Book Tracker V1===============\n");
         printf("1. Create New Records\n");
-        printf("2. Edit Records\n");
-        printf("3. Display Records\n");
-        printf("4. Delete Records\n");
-        printf("5. Exit\n");
+        printf("2. Display Records\n");
+        printf("3. Delete Records\n");
+        printf("4. Exit\n");
         printf("=============================================\n");
         
-        printf("Enter choice (1-5): ");
+        printf("Enter choice (1-4): ");
         fgets(buffer, sizeof(buffer), stdin);
         if (sscanf(buffer, "%d", &choice) != 1)
         {
@@ -32,14 +32,54 @@ int main (void)
         {
             // Create new records case.
             case 1:
-                break;
+                // Get filename from user.
+                filename = getFilename();
+                if (!filename) break;
 
-            // Edit records case.
-            case 2:
+                // Check if file with name already exists.
+                if (checkFileExists(filename))
+                {
+                    printf("Error: \"%s\" already exists.\n", filename);
+                    free(filename);
+                    filename = NULL;
+                    break;
+                }
+
+                // Check if the filename is a CSV.
+                if (!isCSV(filename))
+                {
+                    printf("Error: \"%s\" is not a valid CSV filename.\n", filename);
+                    free(filename);
+                    filename = NULL;
+                    break;
+                }
+
+                // Get the amount of records the user would like to enter.
+                printf("Enter the number of records to be created: ");
+                fgets(buffer, sizeof(buffer), stdin);
+                if (sscanf(buffer, "%d", &user_rec_count) != 1)
+                {
+                    printf("Invalid number. Please try again.\n");
+                    free(filename);
+                    filename = NULL;
+                    break;
+                }
+                printf("%d\n", user_rec_count);
+
+                // Validate record count.
+                if (user_rec_count <= 0)
+                {
+                    printf("Error: Record count must be above 0.\n");
+                    free(filename);
+                    filename = NULL;
+                    break;
+                }
+
+
                 break;
 
             // Display records case.
-            case 3:
+            case 2:
                 // Get filename from user.
                 filename = getFilename();
                 if (!filename) break;
@@ -66,7 +106,7 @@ int main (void)
                 break;
 
             // Delete records case.
-            case 4:
+            case 3:
                 // Get filename from user.
                 filename = getFilename();
                 if (!filename) break;
@@ -88,14 +128,14 @@ int main (void)
                 break;
 
             // Exit case.
-            case 5:
+            case 4:
                 printf("Exiting...\n");
                 break;
 
             default:
                 printf("Invalid choice. Please try again.\n");
         }
-    } while (choice != 5);
+    } while (choice != 4);
 
     return 0;
 }

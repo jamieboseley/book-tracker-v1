@@ -138,7 +138,7 @@ void freeList(Node **head)
     Node *nextNode;
 
     // Iterate through the list to free nodes & data.
-    while (!currentNode)
+    while (currentNode)
     {
         nextNode = currentNode->next;
         free(currentNode->data);
@@ -329,6 +329,9 @@ void displayList(Node *head)
 
         int price_len = snprintf(NULL, 0, "%lf", currentNode->data->price);
         max_col6_len = ((price_len > max_col6_len) ? price_len : max_col6_len);
+
+        int rating_len = snprintf(NULL, 0, "%d", currentNode->data->rating);
+        max_col7_len = ((rating_len > max_col7_len) ? rating_len : max_col7_len);
 
         currentNode = currentNode->next;
     }

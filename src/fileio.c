@@ -159,3 +159,23 @@ int checkFileExists(const char *filename)
 
     return FAIL;
 }
+
+
+
+/**
+ * [fileio.c]
+ * Function: isCSV
+ * Purpose: Checks to see if a filename is a valid CSV format.
+ * Parameters:
+ *   - filename (char): The name of the file.
+ * Example: if (!isCSV("data.csv")) break;
+ * Effects: None.
+ * Return: FAIL if the name is not valid. 1 if the file is valid.
+*/
+int isCSV(const char *filename)
+{
+    // Return fail if the length of filename is invalid.
+    if (strlen(filename) < 4) return FAIL;
+
+    return strcmp(filename + strlen(filename) - 4, ".csv") == 0;
+}
