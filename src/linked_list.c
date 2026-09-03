@@ -162,8 +162,11 @@ void freeList(Node **head)
  * Effects: Opens a file in read only mode & allocates memory on the heap.
  * Return: A pointer to the head node. NULL if an error occured.
 */
-Node *importFromCSV(const char *filename, int *record_count) // TO DO: Add checkHeaderExists implementation.
+Node *importFromCSV(const char *filename, int *record_count)
 {
+    // Check header exsits.
+    if (!checkHeaderExists(filename)) return NULL;
+
     // Attempt to open the file.
     FILE *fh = fopen(filename, "r");
     if (!fh) return NULL;

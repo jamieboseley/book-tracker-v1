@@ -83,7 +83,7 @@ int checkHeaderExists(const char *filename)
     // Check if file is empty.
     if (isFileEmpty(filename)) return FAIL;
 
-    char *header = "Title,Author,Genre,PageCount,Price,Rating";
+    const char *header = "ID,Title,Author,Genre,PageCount,Price,Rating";
     size_t header_len = strlen(header);
 
     // Reads the first line into the buffer.
@@ -91,6 +91,9 @@ int checkHeaderExists(const char *filename)
     fgets(buffer, MAX_BUFFER_LEN, fh);
 
     fclose(fh);
+
+    // Remove the newline character.
+    buffer[strcspn(buffer, "\r\n")] = '\0';
 
     // Compares lengths of the buffer and header.
     if (strlen(buffer) == header_len)
@@ -124,7 +127,7 @@ int getRecordCount (const char *filename)
     int record_count = 0;
 
     // Read and discard the header.
-    fgets(buffer, MAX_BUFFER_LEN, fh); // TO DO: Check header exists.
+    fgets(buffer, MAX_BUFFER_LEN, fh);
 
     while (fgets(buffer, MAX_BUFFER_LEN, fh)) record_count++;
 

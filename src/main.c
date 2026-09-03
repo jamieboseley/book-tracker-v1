@@ -75,6 +75,7 @@ int main (void)
                     break;
                 }
 
+                // TO DO: Finish create new records code.
 
                 break;
 
