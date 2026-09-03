@@ -46,3 +46,98 @@ char *getFilename()
 
     return filename;
 }
+
+
+
+/**
+ * [menu.c]
+ * Function: *getString
+ * Purpose: Gets a string from the user, cleans it up, and returns it
+ * Parameters:
+ *   - max_length (int): The max length for the string.
+ * Example: char *str = getString(100);
+ * Effects: None.
+ * Return: NULL if an error occured. The char pointer if successful.
+*/
+char *getString(int max_length)
+{
+    char *str = malloc(max_length);
+
+    // Failure allocating memory.
+    if (!str) return NULL;
+
+    // Failure reading string.
+    if (!fgets(str, max_length, stdin)) 
+    {
+        free(str);
+        return NULL;
+    }
+
+    // Remove newline from string.
+    str[strcspn(str, "\n")] = '\0';
+
+    // No string was entered.
+    if (str[0] == '\0') 
+    {
+        free(str);
+        return NULL;
+    }
+
+    return str;
+}
+
+
+
+/**
+ * [menu.c]
+ * Function: getInt
+ * Purpose: Gets an int from the user.
+ * Parameters:
+ *   - *num (int): A pointer to an integer value.
+ * Example: if (!getInt(&rating)) break;
+ * Effects: Updates pointer.
+ * Return: SUCCESS if successful. FAIL if an error occured.
+*/
+int getInt(int *num)
+{
+    char buffer[MAX_BUFFER_LEN];
+
+    // Read into buffer.
+    if (!fgets(buffer, sizeof(buffer), stdin)) return FAIL;
+
+    // Scan buffer for int.
+    if (sscanf(buffer, "%d", num) != 1)
+    {
+        return FAIL;
+    }
+
+    return SUCCESS;
+}
+
+
+
+/**
+ * [menu.c]
+ * Function: getPrice
+ * Purpose: Gets a price from the user.
+ * Parameters:
+ *   - *price (float): A pointer to an float value.
+ * Example: if (!getPrice(&price)) break;
+ * Effects: Updates pointer.
+ * Return: SUCCESS if successful. FAIL if an error occured.
+*/
+int getPrice(float *price)
+{
+    char buffer[MAX_BUFFER_LEN];
+
+    // Read into buffer.
+    if (!fgets(buffer, sizeof(buffer), stdin)) return FAIL;
+
+    // Scan buffer for int.
+    if (sscanf(buffer, "%f", price) != 1)
+    {
+        return FAIL;
+    }
+
+    return SUCCESS;
+}

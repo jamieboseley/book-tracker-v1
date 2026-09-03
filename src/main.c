@@ -76,6 +76,41 @@ int main (void)
                 }
 
                 // TO DO: Finish create new records code.
+                /// Loop for the amount of records the user would like to create.
+                for (int i = 0; i < user_rec_count; i++)
+                {
+                    // Prompt user for the details of each book.
+                    int id = i+1;
+                    char *title;
+                    char *author;
+                    char *genre;
+                    int page_count; // TO DO: Set invalid data to -1 in CSV? When display if = -1 display N/A in CL.
+                    float price;
+                    int rating;
+
+                    printf("Enter the title for record #%d: ", id);
+                    title = getString(MAX_TITLE_LEN);
+                    if (!title) break;
+
+                    printf("Enter the author for record #%d: ", id);
+                    author = getString(MAX_AUTHOR_LEN);
+                    if (!author) break;
+
+                    printf("Enter the genre for record #%d: ", id);
+                    genre = getString(MAX_AUTHOR_LEN);
+                    if (!genre) break;
+
+                    printf("Enter the page count for record #%d: ", id);
+                    if (!getInt(&page_count)) break;
+
+                    printf("Enter the price for record #%d: ", id);
+                    if (!getPrice(&price)) break;
+
+                    printf("Enter the rating (from 1 - 5) for record #%d: ", id);
+                    if (!getInt(&rating)) break;
+
+                    
+                }
 
                 break;
 
