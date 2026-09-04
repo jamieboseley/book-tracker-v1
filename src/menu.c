@@ -121,12 +121,12 @@ int getInt(int *num)
  * Function: getPrice
  * Purpose: Gets a price from the user.
  * Parameters:
- *   - *price (float): A pointer to an float value.
+ *   - *price (float): A pointer to an double value.
  * Example: if (!getPrice(&price)) break;
  * Effects: Updates pointer.
  * Return: SUCCESS if successful. FAIL if an error occured.
 */
-int getPrice(float *price)
+int getPrice(double *price)
 {
     char buffer[MAX_BUFFER_LEN];
 
@@ -134,7 +134,7 @@ int getPrice(float *price)
     if (!fgets(buffer, sizeof(buffer), stdin)) return FAIL;
 
     // Scan buffer for int.
-    if (sscanf(buffer, "%f", price) != 1)
+    if (sscanf(buffer, "%lf", price) != 1)
     {
         return FAIL;
     }

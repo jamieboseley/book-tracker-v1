@@ -77,6 +77,7 @@ int main (void)
 
                 // TO DO: Finish create new records code.
                 /// Loop for the amount of records the user would like to create.
+                int list_status = SUCCESS;
                 for (int i = 0; i < user_rec_count; i++)
                 {
                     // Prompt user for the details of each book.
@@ -85,7 +86,7 @@ int main (void)
                     char *author;
                     char *genre;
                     int page_count; // TO DO: Set invalid data to -1 in CSV? When display if = -1 display N/A in CL.
-                    float price;
+                    double price;
                     int rating;
 
                     printf("Enter the title for record #%d: ", id);
@@ -109,8 +110,51 @@ int main (void)
                     printf("Enter the rating (from 1 - 5) for record #%d: ", id);
                     if (!getInt(&rating)) break;
 
-                    
+                    // Validate rating.
+                    if (rating < 1 || rating > 5)
+                    {
+                        printf("Error: Rating must be between 1 - 5.\n");
+                        break;
+                    }
+
+
+                    // Insert into linked list and monitor the status.
+                    int entry_status = insertNode(&head, id, title, author, genre, page_count, price, rating);
+
+                    // Free dynamically allocated memory each iteration.
+                    free(title);
+                    title = NULL;
+
+                    free(author);
+                    author = NULL;
+
+                    free(genre);
+                    genre = NULL;
+
+                    if (!entry_status) 
+                    {
+                        list_status = FAIL;
+                        break;
+                    }
                 }
+
+                if (list_status == SUCCESS)
+                {
+                    if (exportToCSV(head, filename) == FAIL)
+                    {
+                        printf("Error: There was an error exporting the list to a formatted CSV.\n");
+                    }
+                }
+                else
+                {
+                    printf("Error: There was an error adding the records to the list.\n");
+                }
+                
+
+                freeList(&head);
+
+                free(filename);
+                filename = NULL;
 
                 break;
 
